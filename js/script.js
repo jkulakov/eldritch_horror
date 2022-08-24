@@ -1,5 +1,6 @@
 const ancients = document.querySelectorAll('.ancient_img');
 const difContainer = document.querySelector('.dif_levels');
+const gameContainer = document.querySelector('.game_container');
 
 const ancientsData = [
   {
@@ -357,6 +358,11 @@ ancients.forEach((item) => {
 
 function startGame(e) {
   setting.dificulty = e.target.id;
+  const levelz = document.querySelectorAll('.dif_level');
+  levelz.forEach((item) => {
+    item.classList.remove('dif_active');
+  });
+  e.target.classList.add('dif_active');
   createDeck();
 }
 
@@ -365,36 +371,78 @@ function createDeck() {
   let blueTotal = ancientsData[setting.ancient].firstStage.blueCards + ancientsData[setting.ancient].secondStage.blueCards + ancientsData[setting.ancient].thirdStage.blueCards;
   let brownTotal = ancientsData[setting.ancient].firstStage.brownCards + ancientsData[setting.ancient].secondStage.brownCards + ancientsData[setting.ancient].thirdStage.brownCards;
 
-  console.log(`${greenTotal}\n${brownTotal}\n${blueTotal}`);
-
   const allGreenCards = [];
   const allBrownCards = [];
   const allBlueCards = [];
 
+  let level = ''; 
+  if(setting.dificulty == 0) level = 'hard';
+  if(setting.dificulty == 2) level = 'easy';
+
+  const finalDeck = [[], [], []];
+
   while (allGreenCards.length < greenTotal) {
     let randCard = Math.floor(Math.random() * (greenCardsData.length - 1 + 1));
-    if(allGreenCards.indexOf(greenCardsData[randCard]) == -1) {
+    if(allGreenCards.indexOf(greenCardsData[randCard]) == -1 && greenCardsData[randCard].difficulty != level) {
     allGreenCards.push(greenCardsData[randCard]);
     }
   }
 
   while (allBrownCards.length < brownTotal) {
     let randCard = Math.floor(Math.random() * (brownCardsData.length - 1 + 1));
-    if(allBrownCards.indexOf(brownCardsData[randCard]) == -1) {
+    if(allBrownCards.indexOf(brownCardsData[randCard]) == -1 && brownCardsData[randCard].difficulty != level) {
     allBrownCards.push(brownCardsData[randCard]);
     }
   }
 
   while (allBlueCards.length < blueTotal) {
     let randCard = Math.floor(Math.random() * (blueCardsData.length - 1 + 1));
-    if(allBlueCards.indexOf(blueCardsData[randCard]) == -1) {
+    if(allBlueCards.indexOf(blueCardsData[randCard]) == -1 && blueCardsData[randCard].difficulty != level) {
     allBlueCards.push(blueCardsData[randCard]);
     }
   }
 
-  // console.log(allGreenCards);
-  // console.log(allBrownCards);
-  // console.log(allBlueCards);
+  for (let i = 0; i < allGreenCards.length; i++) {
+    if(i < ancientsData[setting.ancient].firstStage.greenCards && ancientsData[setting.ancient].firstStage.greenCards != 0) {
+      finalDeck[0].push(allGreenCards[i]);
+    } else if(i >= ancientsData[setting.ancient].firstStage.greenCards && i < (ancientsData[setting.ancient].secondStage.greenCards + ancientsData[setting.ancient].firstStage.greenCards) && ancientsData[setting.ancient].secondStage.greenCards != 0) {
+      finalDeck[1].push(allGreenCards[i]);
+    } else if(i >= (ancientsData[setting.ancient].secondStage.greenCards + ancientsData[setting.ancient].firstStage.greenCards) && ancientsData[setting.ancient].thirdStage.greenCards != 0) {
+      finalDeck[2].push(allGreenCards[i]);
+    }
+  }
+
+  for (let i = 0; i < allBlueCards.length; i++) {
+    if(i < ancientsData[setting.ancient].firstStage.blueCards && ancientsData[setting.ancient].firstStage.blueCards != 0) {
+      finalDeck[0].push(allBlueCards[i]);
+    } else if(i >= ancientsData[setting.ancient].firstStage.blueCards && i < (ancientsData[setting.ancient].secondStage.blueCards + ancientsData[setting.ancient].firstStage.blueCards) && ancientsData[setting.ancient].secondStage.blueCards != 0) {
+      finalDeck[1].push(allBlueCards[i]);
+    } else if(i >= (ancientsData[setting.ancient].secondStage.blueCards + ancientsData[setting.ancient].firstStage.blueCards) && ancientsData[setting.ancient].thirdStage.blueCards != 0) {
+      finalDeck[2].push(allBlueCards[i]);
+    }
+  }
+
+  for (let i = 0; i < allBrownCards.length; i++) {
+    if(i < ancientsData[setting.ancient].firstStage.brownCards && ancientsData[setting.ancient].firstStage.brownCards != 0) {
+      finalDeck[0].push(allBrownCards[i]);
+    } else if(i >= ancientsData[setting.ancient].firstStage.brownCards && i < (ancientsData[setting.ancient].secondStage.brownCards + ancientsData[setting.ancient].firstStage.brownCards) && ancientsData[setting.ancient].secondStage.brownCards != 0) {
+      finalDeck[1].push(allBrownCards[i]);
+    } else if(i >= (ancientsData[setting.ancient].secondStage.brownCards + ancientsData[setting.ancient].firstStage.brownCards) && ancientsData[setting.ancient].thirdStage.brownCards != 0) {
+      finalDeck[2].push(allBrownCards[i]);
+    }
+  }
+
+  createLevelTable(finalDeck);
+  
+}
+
+function createLevelTable(finalDeck) {
+
+  console.log(finalDeck);
+
+  // gameContainer.append();
+  
+
 
 }
 
@@ -405,7 +453,7 @@ function createDifficultyLevel() {
     const li = document.createElement('li');
     li.classList.add('dif_level');
     li.innerHTML = `${levels[i]}`;
-    li.id = i + 1;
+    li.id = i;
     li.addEventListener('click', startGame);
     difContainer.append(li);
   }

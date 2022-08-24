@@ -84,6 +84,13 @@ body {
 .dif_level {
   margin-top: 40px;
   cursor: pointer;
+  padding: 10px;
+}
+
+.dif_active {
+  border: 1px solid #FF0000;
+  border-radius: 10px;
+  transition: 0.3s ease-out;
 }
 
 .game_container {

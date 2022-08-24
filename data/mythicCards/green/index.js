@@ -109,6 +109,6 @@ const cardsData = [
     difficulty: 'easy',
     color:'green'
   },
-]
+];
 
 export default cardsData

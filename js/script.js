@@ -565,6 +565,15 @@ function createLevel(e) {
   e.target.classList.add('ancient_active');
   setting.ancient = e.target.id;
   createDifficultyLevel();
+
+  const test = document.querySelectorAll('.card');
+  if(test != null) {
+    test.forEach((item) => {
+      item.remove();
+    });
+    const finalDeck = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+    j = 0;
+  }
 }
 
 

@@ -355,6 +355,18 @@ ancients.forEach((item) => {
   item.addEventListener('click', createLevel);
 });
 
+function shuffleArr(array) {
+  let currentIndex = array.length,  randomIndex;
+
+  while (currentIndex != 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+  return array;
+}
+
 
 function startGame(e) {
   setting.dificulty = e.target.id;
@@ -432,18 +444,72 @@ function createDeck() {
     }
   }
 
+  finalDeck[0] = shuffleArr(finalDeck[0]);
+  finalDeck[1] = shuffleArr(finalDeck[1]);
+  finalDeck[2] = shuffleArr(finalDeck[2]);
+
   createLevelTable(finalDeck);
+
+  showCards(finalDeck);
   
 }
 
-function createLevelTable(finalDeck) {
-
+function showCards(finalDeck) {
   console.log(finalDeck);
 
-  // gameContainer.append();
-  
+  const currentCard = document.createElement('img');
+
+  currentCard.src = `../assets/MythicCards/`;
+  gameContainer.append(currentCard);
+
+}
+
+function createLevelTable(finalDeck) {
+  gameContainer.innerHTML = '';
+  let finalCounter = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+
+  for (let i = 0; i < finalDeck.length; i++) {
+    finalDeck[i].forEach((item) => {
+      switch(item.color) {
+        case 'green':
+          finalCounter[i][0] = finalCounter[i][0] + 1;
+          break;
+        case 'brown':
+          finalCounter[i][1] = finalCounter[i][1] + 1;
+          break; 
+        case 'blue':
+          finalCounter[i][2] = finalCounter[i][2] + 1;
+          break;      
+      }
+    });
+
+  const stageContainer = document.createElement('div');
+  stageContainer.classList.add('stage');
+
+  stageContainer.innerHTML = `Stage ${i+1}`;
+
+  const greenStatus = document.createElement('div');
+  greenStatus.classList.add('green');
+  greenStatus.textContent = finalCounter[i][0];
+  stageContainer.append(greenStatus);
+
+  const brownStatus = document.createElement('div');
+  brownStatus.classList.add('brown');
+  brownStatus.textContent = finalCounter[i][1];
+  stageContainer.append(brownStatus);
+
+  const blueStatus = document.createElement('div');
+  blueStatus.classList.add('blue');
+  blueStatus.textContent = finalCounter[i][2];
+  stageContainer.append(blueStatus);
+
+  gameContainer.append(stageContainer);
+
+  }
 
 
+  console.log(finalDeck);
+  console.log(finalCounter);
 }
 
 function createDifficultyLevel() {

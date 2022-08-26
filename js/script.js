@@ -474,7 +474,7 @@ function showCards(finalDeck) {
   function deleteCard() {
     const curCard = document.querySelector('#current');
     curCard.classList.add('card');
-    curCard.src = `../assets/MythicCards/${finalDeck[j][0].color}/${finalDeck[j][0].id}.png`;
+    curCard.src = `https://raw.githubusercontent.com/jkulakov/eldritch_horror/master/assets/MythicCards/${finalDeck[j][0].color}/${finalDeck[j][0].id}.png`;
   
     finalDeck[j].shift();
     if(finalDeck[j].length == 0) j++;
@@ -493,7 +493,7 @@ function showCards(finalDeck) {
   currentCard.id = 'current';
   const cardCover = document.createElement('img');
   cardCover.classList.add('card');
-  cardCover.src = `../assets/mythicCardBackground.png`;
+  cardCover.src = `https://raw.githubusercontent.com/jkulakov/eldritch_horror/master/assets/mythicCardBackground.png`;
   cardCover.addEventListener('click', deleteCard);
   gameContainer.append(cardCover);
   gameContainer.append(currentCard);

@@ -14,7 +14,7 @@ body {
 .main {
   width: 100%;
   min-height: 100vh;
-  background: url("https://raw.githubusercontent.com/jkulakov/eldritch_horror/main/assets/bg.jpeg") no-repeat #0a0e34 center;
+  background: url("https://raw.githubusercontent.com/jkulakov/eldritch_horror/master/assets/bg.jpeg") no-repeat #0a0e34 center;
   background-size: cover;
   position: relative;
   font-size: 30px;
@@ -37,7 +37,6 @@ body {
   z-index: 2;
   /* min-height: 100vh; */
   position: relative;
-  border: black 1px solid;
   padding: 20px;
   display: flex;
   justify-content: space-between;

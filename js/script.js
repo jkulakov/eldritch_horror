@@ -379,7 +379,14 @@ function startGame(e) {
     item.classList.remove('dif_active');
   });
   e.target.classList.add('dif_active');
-
+  const test = document.querySelectorAll('.card');
+  if(test != null) {
+    test.forEach((item) => {
+      item.remove();
+    });
+    const finalDeck = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+    j = 0;
+  }
   createDeck();
 }
 

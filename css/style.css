@@ -96,6 +96,15 @@ body {
 .game_container {
   width: 45%;
   display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.stat_container {
+  width: 100%;
+  display: flex;
   justify-content: center;
   flex-direction: column;
   flex-wrap: wrap;
@@ -145,5 +154,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.card {
+  width: 150px;
+  margin: 20px;
+  border-radius: 5%;
 }
 

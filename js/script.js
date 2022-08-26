@@ -1,6 +1,9 @@
 const ancients = document.querySelectorAll('.ancient_img');
 const difContainer = document.querySelector('.dif_levels');
 const gameContainer = document.querySelector('.game_container');
+const statContainer = document.createElement('div');
+statContainer.classList.add('stat_container');
+gameContainer.append(statContainer);
 
 const ancientsData = [
   {
@@ -356,7 +359,7 @@ ancients.forEach((item) => {
 });
 
 function shuffleArr(array) {
-  let currentIndex = array.length,  randomIndex;
+  let currentIndex = array.length, randomIndex;
 
   while (currentIndex != 0) {
     randomIndex = Math.floor(Math.random() * currentIndex);
@@ -369,16 +372,19 @@ function shuffleArr(array) {
 
 
 function startGame(e) {
+  
   setting.dificulty = e.target.id;
   const levelz = document.querySelectorAll('.dif_level');
   levelz.forEach((item) => {
     item.classList.remove('dif_active');
   });
   e.target.classList.add('dif_active');
+
   createDeck();
 }
 
 function createDeck() {
+  
   let greenTotal = ancientsData[setting.ancient].firstStage.greenCards + ancientsData[setting.ancient].secondStage.greenCards + ancientsData[setting.ancient].thirdStage.greenCards;
   let blueTotal = ancientsData[setting.ancient].firstStage.blueCards + ancientsData[setting.ancient].secondStage.blueCards + ancientsData[setting.ancient].thirdStage.blueCards;
   let brownTotal = ancientsData[setting.ancient].firstStage.brownCards + ancientsData[setting.ancient].secondStage.brownCards + ancientsData[setting.ancient].thirdStage.brownCards;
@@ -448,24 +454,48 @@ function createDeck() {
   finalDeck[1] = shuffleArr(finalDeck[1]);
   finalDeck[2] = shuffleArr(finalDeck[2]);
 
+
   createLevelTable(finalDeck);
 
   showCards(finalDeck);
   
 }
+let j = 0;
 
 function showCards(finalDeck) {
-  console.log(finalDeck);
+
+  function deleteCard() {
+    const curCard = document.querySelector('#current');
+    curCard.classList.add('card');
+    curCard.src = `../assets/MythicCards/${finalDeck[j][0].color}/${finalDeck[j][0].id}.png`;
+  
+    finalDeck[j].shift();
+    if(finalDeck[j].length == 0) j++;
+
+    createLevelTable(finalDeck);
+
+    if((finalDeck[0].length + finalDeck[1].length + finalDeck[2].length) == 0) {
+      currentCard.remove();
+      cardCover.remove();
+      finalDeck = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+      j = 0;
+    }
+  }
 
   const currentCard = document.createElement('img');
-
-  currentCard.src = `../assets/MythicCards/`;
+  currentCard.id = 'current';
+  const cardCover = document.createElement('img');
+  cardCover.classList.add('card');
+  cardCover.src = `../assets/mythicCardBackground.png`;
+  cardCover.addEventListener('click', deleteCard);
+  gameContainer.append(cardCover);
   gameContainer.append(currentCard);
 
 }
 
 function createLevelTable(finalDeck) {
-  gameContainer.innerHTML = '';
+  
+  statContainer.innerHTML = '';
   let finalCounter = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
 
   for (let i = 0; i < finalDeck.length; i++) {
@@ -503,13 +533,9 @@ function createLevelTable(finalDeck) {
   blueStatus.textContent = finalCounter[i][2];
   stageContainer.append(blueStatus);
 
-  gameContainer.append(stageContainer);
+  statContainer.append(stageContainer);
 
   }
-
-
-  console.log(finalDeck);
-  console.log(finalCounter);
 }
 
 function createDifficultyLevel() {

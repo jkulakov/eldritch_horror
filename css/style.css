@@ -14,7 +14,7 @@ body {
 .main {
   width: 100%;
   min-height: 100vh;
-  background: url("/assets/bg.jpeg") no-repeat #0a0e34 center;
+  background: url("https://raw.githubusercontent.com/jkulakov/eldritch_horror/main/assets/bg.jpeg") no-repeat #0a0e34 center;
   background-size: cover;
   position: relative;
   font-size: 30px;
